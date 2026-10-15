@@ -7,7 +7,12 @@ import {
   Share2Icon,
   TrendingUpIcon,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  dummyAccountsData,
+  dummyActivityData,
+  dummyPostsData,
+} from "../assets/assets";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -16,6 +21,35 @@ const Dashboard = () => {
     connectedAccounts: 0,
   });
   const [activities, setActivities] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const [postsRes, accountRes, activityRes] = [
+          { data: dummyPostsData },
+          {
+            data: dummyAccountsData,
+          },
+          {
+            data: dummyActivityData,
+          },
+        ];
+
+        const posts = postsRes.data;
+        setStats({
+          scheduled: posts.filter((p: any) => p.status === "scheduled").length,
+          published: posts.filter((p: any) => p.status === "published").length,
+          connectedAccounts: accountRes.data.filter(
+            (a: any) => a.status === "connected",
+          ).length,
+        });
+        setActivities(activityRes.data);
+      } catch (error) {
+        console.error("error fetching dashboard data!");
+      }
+    };
+    fetchDashboardData();
+  }, []);
 
   const statsCards = [
     {
@@ -105,7 +139,7 @@ const Dashboard = () => {
                     </span>
                   </div>
                   <p className="text-sm text-slate-600">
-                    {activity.desciption}
+                    {activity.description}
                   </p>
                 </div>
               </div>
