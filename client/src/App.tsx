@@ -1,0 +1,25 @@
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Accounts from "./pages/Accounts";
+import Scheduler from "./pages/Scheduler";
+import AIComposer from "./pages/AIComposer";
+
+export default function App() {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route element={<Layout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/accounts" element={<Accounts />} />
+          <Route path="/schedule" element={<Scheduler />} />
+          <Route path="/ai-composer" element={<AIComposer />} />
+        </Route>
+      </Routes>
+    </>
+  );
+}
