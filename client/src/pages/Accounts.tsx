@@ -1,12 +1,40 @@
-import { useState } from "react";
-import { PLATFORMS } from "../assets/assets";
+import { useEffect, useState } from "react";
+import { dummyAccountsData, PLATFORMS } from "../assets/assets";
 import { PlusIcon } from "lucide-react";
+import AccountList from "../components/AccountList";
 
 const Accounts = () => {
   const [accounts, setAccounts] = useState<any[]>([]);
   const [connecting, setConnecting] = useState<string | null>(null);
   const [showPlatformPicker, setShowPlatformPicker] = useState(false);
 
+  const fetchAccounts = async (
+    isSync = false,
+    platform?: string | null,
+    successMsg?: string,
+  ): Promise<void> => {
+    setAccounts(dummyAccountsData);
+    console.log(isSync, platform, successMsg);
+  };
+
+  useEffect(() => {
+    fetchAccounts();
+  }, []);
+  // handle connect function 
+  const handleConnect = async (platformId:string):Promise<void>()=>{
+  setConnecting(platformId);
+  setTimeout(() => {
+  setConnecting(null)
+  setAccounts((prev)=>[...prev,dummyAccountsData[0]])
+  setShowPlatformPicker(false)
+}, 1000);
+  }
+  // handleDisconnect function definition
+  const handleDisconnect = async (accountId: string) => {
+    setAccounts(accounts.filter((a) => a.id !== accountId));
+  };
+
+  const connectedIds = accounts.map((a) => a.platform);
   return (
     <div className="space-y-8 max-w-4xl">
       {/* Header */}
@@ -30,6 +58,7 @@ const Accounts = () => {
       {/* platform picker modal */}
 
       {/* Connected Acoounts Lists */}
+      <AccountList accounts={accounts} onDisconnect={handleDisconnect} />
     </div>
   );
 };
