@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { dummyPostsData, PLATFORMS } from "../assets/assets";
-import { XIcon } from "lucide-react";
+import { ArrowRightIcon, CalendarIcon, ClockIcon, XIcon } from "lucide-react";
 
 const Scheduler = () => {
   const [posts, setPosts] = useState<any[]>([]);
@@ -138,9 +138,66 @@ const Scheduler = () => {
                 </label>
               )}
             </div>
-            {/* date and time */}
 
-            {/* submit button */}
+            {/* Date and time */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Date input */}
+              <div>
+                <label className="block text-xs text-slate-500 uppercase mb-2">
+                  Date
+                </label>
+
+                <div className="relative">
+                  <CalendarIcon className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+
+                  <input
+                    type="date"
+                    required
+                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 text-sm outline-none"
+                    value={scheduledDate}
+                    onChange={(e) => setScheduledDate(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Time input */}
+              <div>
+                <label className="block text-xs text-slate-500 uppercase mb-2">
+                  Time
+                </label>
+
+                <div className="relative">
+                  <ClockIcon className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+
+                  <input
+                    type="time"
+                    required
+                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 text-sm outline-none"
+                    value={scheduledTime}
+                    onChange={(e) => setScheduledTime(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Submit button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-2 py-3.5 bg-red-500 hover:bg-red-600 transition-all text-white rounded-lg"
+            >
+              {loading ? (
+                <>
+                  <div className="size-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Scheduling
+                </>
+              ) : (
+                <>
+                  Schedule Post
+                  <ArrowRightIcon className="size-4" />
+                </>
+              )}
+            </button>
           </form>
         </div>
       </div>
