@@ -41,12 +41,12 @@ const AccountList = ({ accounts, onDisconnect }: AccountListProps) => {
         return (
           <div
             key={index}
-            className="group bg-white border border-slate-200 flex items-center gap-4 hover:border-slate-300 transition-all rounded-2xl"
+            className="group bg-white border border-slate-200 flex items-center gap-4 hover:border-slate-300 transition-all rounded-2xl p-4"
           >
             <div className="size-12 bg-slate-50 rounded-xl flex items-center justify-center shrink-0 p-2">
               <meta.icon className="size-5 text-slate-500" />
             </div>
-            <div>
+            <div className="flex-1 min-w-0">
               <div className="text-slate-900 truncate text-md">
                 {account.handle}
               </div>
